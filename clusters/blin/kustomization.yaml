@@ -2,3 +2,5 @@
 resources:
   - ../../manifests/sealed-secrets
   - gh-deploy-key.yaml
+  - tenants/osg
+  - tenants/usatlas
