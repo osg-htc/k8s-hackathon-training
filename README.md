@@ -26,3 +26,6 @@ NOTE: all the commands in this part of the tutorial should be run from the login
     and replace the Flux SSH key secret with a sealed secret
 
 6.  Create `osg` and `usatlas` [namespaces](clusters/README-namespaces.md#)
+
+7.  Take the hello world application from part 1 of the tutorial and add it to the `usatlas-ops` directory you created
+    in step (6) to deploy it to the `usatlas` namespace!
