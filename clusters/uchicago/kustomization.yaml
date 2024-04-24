@@ -1,3 +1,4 @@
 resources:
   - bootstrap/
   - ../../manifests/sealed-secrets
+  - gh-deploy-key.yaml
