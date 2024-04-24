@@ -308,7 +308,7 @@ theoretical operators will have write access to
           namespace: usatlas
         spec:
           interval: 1m0s
-          path: ./clusters/uchicago/usatlas-ops
+          path: ./manifests
           prune: true
           sourceRef:
             kind: GitRepository
