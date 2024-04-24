@@ -1,8 +1,0 @@
----
-namespace: usatlas
-
-resources:
-  - deploy-key.yaml
-  - namespace.yaml
-  - service-account.yaml
-  - sync.yaml
