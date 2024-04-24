@@ -137,6 +137,12 @@ turn them into decrypted Kubernetes secrets.
           - ../../manifests/sealed-secrets
           - gh-deploy-key.yaml
 
+7.  Wait until the SealedSecret object before proceeding to step 8:
+
+        $ kubectl -n flux-system get sealedsecret
+        NAME         AGE
+        deploy-key   20s
+
 8.  Once the SealedSecret object is created, remove the manually created secret and the sealed secret in case it's
     throwing the following error `Resource "deploy-key" already exists and is not managed by SealedSecret`:
 
