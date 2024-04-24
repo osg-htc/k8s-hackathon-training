@@ -267,7 +267,7 @@ theoretical operators will have write access to
 4.  Create a Sealed Secret for the deploy key associated with the `k8s-hackathon-ops` GitHub repository:
 
         flux create secret git deploy-key --url=ssh://git@github.com/osg-htc/k8s-hackathon-ops \
-                                          --private-key-file=/usr/local/tutorial/gitops/k8s-hackathon-ps.key
+                                          --private-key-file=/usr/local/tutorial/gitops/k8s-hackathon-ops.key \
                                           --export \
         | yq '.metadata.namespace="usatlas"' -o json \
         | kubeseal --cert clusters/uchicago/sealed-secrets.pem -o yaml \
