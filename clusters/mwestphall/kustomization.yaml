@@ -3,3 +3,4 @@ resources:
   - gh-deploy-key.yaml
   - tenants/osg
   - tenants/usatlas
+  - tenants/usatlas-ops
