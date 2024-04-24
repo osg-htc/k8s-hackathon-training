@@ -12,12 +12,12 @@ In this step, we will manually create the Flux Kustomization and GitRepository o
     replacing `<YOUR USERNAME>` with your UC AF username.
     This tells Flux which directory to look in for a `kustomization.yaml` that describe the objects in your cluster.
 
-3.  Commit your changes to the GitHub repository using the GitHub web UI or your Git workflow of choice.
+3.  Commit your changes to the GitHub repository.
     N.B. this is a shared repository so you'll want to make sure to rebase any local repository copies frequently!
 
 4.  From your login host, pull in your updates:
 
-        git pull origin
+        git pull --rebase origin
 
 5.  Start Flux by running the following from `clusters/<YOUR USERNAME>/bootstrap`:
 
