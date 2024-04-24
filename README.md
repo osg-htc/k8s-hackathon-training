@@ -42,8 +42,9 @@ Setting Up Flux
 In this tutorial we will follow the manual installation procedure for [Flux](https://fluxcd.io/),
 a GitOps Kubernetes integration that relies on [Kustomize](https://kustomize.io/).
 Kustomize is Kubernetes' built-in configuration management designed to tackle the repetitive nature of Kubernetes objects. 
-If you're familiar with Puppet or other configuration management systems, Kustomize has similar features to "deep merge"
-manifests along with other means to stand up multiple instances of a service (e.g., different CEs that share a common base).
+If you're familiar with Puppet or other configuration management systems, Kustomize has the ability to "deep merge"
+manifests along with other means to stand up multiple instances of a service (e.g., different CEs that share a common
+base).
 
 Normally Flux is installed onto a Kubernetes cluster with its `flux bootstrap` command.
 If you're interested in additional details, see the [standard Flux installation](manifests/flux-install#standard-flux-installation)
