@@ -27,6 +27,17 @@ In this step, we will manually create the Flux Kustomization and GitRepository o
 
         kubectl -n flux-system get gitrepo
 
-7.  Check to see that Flux is succeeding to deploy Kubernetes objects based on the state of the GitHub repository:
+You should see a line showing that the GitRepository object is ready, such as:
+
+        NAME                     URL                                                       AGE    READY   STATUS        
+        k8s-hackathon-training   ssh://git@github.com/osg-htc/k8s-hackathon-training.git   3m4s   True    stored artifact for revision 'main@sha1:ebdc88552e4c4889439f48dff208a49e9da9f42a'
+
+7.  Check to see that Flux is successfully deploying Kubernetes objects based on the state of the GitHub repository:
 
         kubectl -n flux-system get ks
+
+You should see a line showing that the Flux Kustomization object is ready, such as:
+
+        NAME          AGE     READY   STATUS
+        flux-system   5m33s   True    Applied revision: main@sha1:ebdc88552e4c4889439f48dff208a49e9da9f42a
+
