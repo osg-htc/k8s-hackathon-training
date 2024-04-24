@@ -1,0 +1,5 @@
+---
+namespace: osg
+
+resources:
+  - namespace.yaml
