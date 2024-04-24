@@ -94,7 +94,18 @@ To solve this, we can set up another layer of namespace-specific Flux:
               | kubeseal --cert sealed-secrets.pem -o yaml \
               > tenants/usatlas/deploy-key.yaml
 
-    2.  Create a `clusters/<YOUR USERNAME>/usatlas-ops/kustomization.yaml` with an empty resource list:
+    2.  Add a reference to `deploy-key.yaml` to `clusters/<YOUR USERNAME>/tenants/usatlas/kustomization.yaml` and commit
+        `deploy-key.yaml` along with your changes to `kustomization.yaml`.
+        When you're done, it should look like the following:
+
+            ---
+            namespace: usatlas
+
+            resources:
+              - deploy-key.yaml
+              - namespace.yaml
+
+    3.  Create a `clusters/<YOUR USERNAME>/usatlas-ops/kustomization.yaml` with an empty resource list:
 
             ---
             resources: []
