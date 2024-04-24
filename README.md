@@ -188,7 +188,7 @@ For example, you may want to run the KAPEL + Gratia integration in an `osg` name
         kubectl -n flux-system describe ks
 
 
-### Creating an operator-managed namespace###
+### Creating an operator-managed namespace ###
 
 The above will generate a namespace that anyone with access to the GitHub repository can manage.
 However, there may be cases where you'll want to allow other people to manage services within your cluster without
