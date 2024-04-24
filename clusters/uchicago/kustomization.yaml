@@ -1,7 +1,6 @@
 resources:
   - bootstrap/
   - ../../manifests/sealed-secrets
-  - ../../manifests/monitoring/configs
   - gh-deploy-key.yaml
   - tenants/osg
   - tenants/usatlas
