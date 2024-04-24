@@ -21,7 +21,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./clusters/<YOUR USERNAME>
+  path: ./clusters/mwestphall
   prune: true
   sourceRef:
     kind: GitRepository
