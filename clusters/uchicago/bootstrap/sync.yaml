@@ -3,7 +3,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
   annotations:
-  name: k8s-hackathon-training
+  name: jd-k8s
   namespace: flux-system
 spec:
   interval: 1m0s
@@ -25,5 +25,5 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: k8s-hackathon-training
+    name: jd-k8s
 ---
