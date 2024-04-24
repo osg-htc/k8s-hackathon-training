@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: main
+    branch: tommy-k8s-hackathon-training
   secretRef:
     name: deploy-key
   timeout: 60s
