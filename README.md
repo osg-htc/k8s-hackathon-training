@@ -30,7 +30,11 @@ following instructions:
     Replacing `YOUR_BRANCH_NAME` with a branch name of your choice, e.g. your `login05` username.
     Remember this branch name, you'll need it in future steps!
 
-3.  
+3.  Push your new branch to GitHub:
+
+        git push origin YOUR_BRANCH_NAME
+
+    Replacing `YOUR_BRANCH_NAME` with the branch name that you chose in the previous step.
 
 Setting Up Flux
 ---------------
@@ -142,13 +146,182 @@ turn them into decrypted Kubernetes secrets.
 Creating Namespaces
 -------------------
 
-6.  Create `osg` and `usatlas` [namespaces](clusters/README-namespaces.md#)
+After installing the Sealed Secrets operator, your Kubernetes cluster is bootstrapped and all ready for GitOps!
+From here on out, deploying services is as simple as pushing commits to your GitHub repository (getting k8s syntax and
+references right is another story – `kubectl -n <namespace> describe ks` is your friend!).
+
+
+### Create an admin-managed namespace ###
+
+First, let's create a namespace for services that you'll administer but want to cordone into their own area for security
+or organizational reasons.
+For example, you may want to run the KAPEL + Gratia integration in an `osg` namespace.
+
+1.  Create a `clusters/uchicago/tenants/osg` directory
+
+2.  Create the namespace object in `clusters/uchicago/tenants/osg/namespace.yaml`:
+
+        ---
+        apiVersion: v1
+        kind: Namespace
+        metadata:
+          name: osg
+
+3.  Create a `clusters/uchicago/tenants/osg/kustomization.yaml` that references the namespace file:
+
+        ---
+        namespace: osg
+
+        resources:
+          - namespace.yaml
+
+4.  Add a reference to your newly created namespace in the cluster-level `clusters/uchicago/kustomization.yaml`:
+
+        resources:
+          ...
+          - tenants/osg
+
+5.  Commit all these changes to GitHub and check for the namespace or errors in Kustomization:
+
+        kubectl get ns
+        kubectl -n flux-system describe ks
+
+
+### Creating an operator-managed namespace###
+
+The above will generate a namespace that anyone with access to the GitHub repository can manage.
+However, there may be cases where you'll want to allow other people to manage services within your cluster without
+having access to the rest of the cluster (e.g., US ATLAS Squid or XCache operations).
+To solve this, we can set up another layer of namespace-specific Flux and use a different GitHub repository that our
+theoretical operators will have write access to
+
+#### Prepare the operator Git repository ####
+
+1.  Clone this repository to the login host:
+
+        cd ~
+        git clone ssh://git@github.com/osg-htc/k8s-hackathon-ops
+
+2.  This is a shared repository so create a Git branch for your work (remember your branch name!):
+
+        cd k8s-hackathon-ops
+        git checkout -b YOUR_BRANCH_NAME main
+
+    Replacing `YOUR_BRANCH_NAME` with a branch name of your choice, e.g. your `login05` username.
+    Remember this branch name, you'll need it in future steps!
+
+3.  Push your new branch to GitHub:
+
+        git push origin YOUR_BRANCH_NAME
+
+    Replacing `YOUR_BRANCH_NAME` with the branch name that you chose in the previous step.
+
+
+#### Setting up Flux ####
+
+1.  Go back to the cluster configuration repository, `k8s-hackathon-training`.
+    Depending on your directory layout, that may look something like:
+    
+        cd ~/k8s-hackathon-training
+
+2.  Repeat the [above namespace creation directions](#create-an-admin-managed-namespace), replacing `osg` with `usatlas`
+
+3.  In the `cluters/uchicago/tenants/usatlas` directory, create a `service-account.yaml` file to create a Kubernetes
+    ServiceAccount to allow Flux to manage the namespace:
+
+        ---
+        apiVersion: v1
+        kind: ServiceAccount
+        metadata:
+          labels:
+            toolkit.fluxcd.io/tenant: usatlas
+          name: usatlas-flux
+        ---
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: Role
+        metadata:
+          name: flux
+        rules:
+          - apiGroups:
+              - '*'
+            resources:
+              - '*'
+            verbs:
+              - '*'
+        ---
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: RoleBinding
+        metadata:
+          name: flux
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: Role
+          name: flux
+        subjects:
+          - name: usatlas-flux
+            kind: ServiceAccount
+
+4.  Create a Sealed Secret for the deploy key associated with the `k8s-hackathon-ops` GitHub repository:
+
+        flux create secret git deploy-key --url=ssh://git@github.com/osg-htc/k8s-hackathon-ops \
+                                          --private-key-file=/usr/local/tutorial/gitops/k8s-hackathon-ps.key
+                                          --export \
+        | yq '.metadata.namespace="usatlas"' -o json \
+        | kubeseal --cert clusters/uchicago/sealed-secrets.pem -o yaml \
+        > clusters/uchicago/tenants/usatlas/gh-deploy-key.yaml
+
+4.  Add a reference to `deploy-key.yaml` to `clusters/uchicago/tenants/usatlas/kustomization.yaml` and commit
+    `gh-deploy-key.yaml` along with your changes to `kustomization.yaml`.
+    When you're done, it should look like the following:
+
+            ---
+            namespace: usatlas
+
+            resources:
+              - gh-deploy-key.yaml
+              - namespace.yaml
+
+4.  Set up the Kustomization and GitRepository object in `clusters/uchicago/tenants/usatlas/sync.yaml`, replacing the
+    value of `branch` with the branch name that you chose for the `k8s-hackathon-ops` repo above:
+
+        ---
+        apiVersion: source.toolkit.fluxcd.io/v1
+        kind: GitRepository
+        metadata:
+          annotations:
+          name: k8s-hackathon-ops
+          namespace: usatlas
+        spec:
+          interval: 1m0s
+          ref:
+            branch: main
+          secretRef:
+            name: deploy-key
+          timeout: 60s
+          url: ssh://git@github.com/osg-htc/k8s-hackathon-ops.git
+        ---
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: flux-system
+          namespace: usatlas
+        spec:
+          interval: 1m0s
+          path: ./clusters/uchicago/usatlas-ops
+          prune: true
+          sourceRef:
+            kind: GitRepository
+            name: k8s-hackathon-ops
+
+    Then add the file reference to the resources list in the `clusters/uchicago/tenants/usatlas/kustomization.yaml`.
 
 
 What Next?
 ----------
 
-At this stage, you're done setting up your Kubernetes cluster to support DevOps integration
+At this stage, you're done setting up your Kubernetes cluster to support GitOps at the cluster-level and in a namespace
+dedicated to a specific group!
 
-Take the "Hello, World!" application from part 1 of the tutorial and add it to the `k8s-hackathon-ops` GitHub repository
-in step (6) to deploy it to the `usatlas` namespace!
+From here, you can attempt to put previous services that you set up manually into Flux.
+For example, you can take the "Hello, World!" application from part 1 of the tutorial and add it to the
+`k8s-hackathon-ops` GitHub repository to deploy it to the `usatlas` namespace!
