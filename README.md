@@ -111,31 +111,32 @@ turn them into decrypted Kubernetes secrets.
     commit this change to the GitHub repository:
 
         resources:
+          - bootstrap
           - ../../manifests/sealed-secrets
 
-2.  Verify that the Sealed Secrets operator has started:
+3.  Verify that the Sealed Secrets operator has started:
 
         $ kubectl -n kube-system get deploy/sealed-secrets-controller
         NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
         sealed-secrets-controller   1/1     1            1           7m
 
-3.  Fetch the your Sealed Secret public certificate and commit it to GitHub:
+4.  Fetch the your Sealed Secret public certificate and commit it to GitHub:
 
         kubeseal --fetch-cert > clusters/uchicago/sealed-secrets.pem
 
-4.  Encrypt the GitHub deploy key secret:
+5.  Encrypt the GitHub deploy key secret:
 
         kubectl -n flux-system get secret/deploy-key -o json \
             | kubeseal --cert clusters/uchicago/sealed-secrets.pem -o yaml \
             > clusters/uchicago/gh-deploy-key.yaml
 
-5.  Add the sealed secret to the GitHub repository and reference it in `clusters/uchicago/kustomization.yaml`:
+6.  Add the sealed secret to the GitHub repository and reference it in `clusters/uchicago/kustomization.yaml`:
 
         resources:
           - ../../manifests/sealed-secrets
           - gh-deploy-key.yaml
 
-6.  Once the SealedSecret object is created, remove the manually created secret and the sealed secret in case it's
+7.  Once the SealedSecret object is created, remove the manually created secret and the sealed secret in case it's
     throwing the following error `Resource "deploy-key" already exists and is not managed by SealedSecret`:
 
         kubectl -n flux-system delete secret/deploy-key
