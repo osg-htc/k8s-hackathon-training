@@ -1,0 +1,7 @@
+---
+namespace: usatlas
+
+resources:
+  - sync.yaml
+  - gh-deploy-key.yaml
+  - namespace.yaml

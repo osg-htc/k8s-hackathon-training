@@ -1,0 +1,28 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  annotations:
+  name: k8s-hackathon-ops
+  namespace: usatlas
+spec:
+  interval: 1m0s
+  ref:
+    branch: grondina
+  secretRef:
+    name: deploy-key
+  timeout: 60s
+  url: ssh://git@github.com/osg-htc/k8s-hackathon-ops.git
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: flux-system
+  namespace: usatlas
+spec:
+  interval: 1m0s
+  path: ./manifests
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: k8s-hackathon-ops
