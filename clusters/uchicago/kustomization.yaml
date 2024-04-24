@@ -1,0 +1,3 @@
+resources:
+  - bootstrap/
+  - ../../manifests/sealed-secrets
