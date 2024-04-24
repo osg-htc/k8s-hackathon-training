@@ -2,4 +2,5 @@ namespace: usatlas
 
 resources:
   - namespace.yaml
+  - service-account.yaml
 
