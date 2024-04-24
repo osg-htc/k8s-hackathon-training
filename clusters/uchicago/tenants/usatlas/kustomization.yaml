@@ -1,0 +1,8 @@
+---
+namespace: osg
+
+resources:
+  - namespace.yaml
+  - service-account.yaml
+  - sync.yaml
+  - gh-deploy-key.yaml
