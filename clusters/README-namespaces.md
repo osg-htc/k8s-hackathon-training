@@ -106,12 +106,11 @@ To solve this, we can set up another layer of namespace-specific Flux:
               - namespace.yaml
 
     3.  Create a `clusters/<YOUR USERNAME>/usatlas-ops/kustomization.yaml` with an empty resource list:
+        This directory is where the other service operators would add their commits to deploy services to the `usatlas`
+        namespace.
 
             ---
             resources: []
-
-        This directory is where the other service operators would add their commits to deploy services to the `usatlas`
-        namespace.
 
 4.  Set up the Kustomization and GitRepository object in `clusters/<YOUR USERNAME>/tenants/usatlas/sync.yaml`:
 
