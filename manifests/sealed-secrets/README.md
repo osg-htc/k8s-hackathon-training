@@ -20,7 +20,8 @@ turn them into decrypted Kubernetes secrets.
 
 3.  Copy the public certificate to `clusters/<YOUR USERNAME>/sealed-secrets.pem` and commit it to GitHub:
 
-        kubeseal --fetch-cert
+        cd clusters/<YOUR USERNAME>
+        kubeseal --fetch-cert > sealed-secrets.pem
 
 4.  Encrypt the GitHub deploy key secret:
 
