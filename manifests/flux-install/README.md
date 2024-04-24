@@ -23,7 +23,7 @@ Manual Installation
 Instead, we can do the bootstrapping ourselves to install the Flux component definitions, namespace, etc:
 Set up of the Kustomization, GitRepository, and SSH secret objects will come in a later step.
 
-From this directory (`k8s-hackathon-training/manifests/flux-install`), run the following on your tutorial host:
+From this directory (`k8s-hackathon-training/manifests/flux-install`), run the following on your login host:
 
 ```
 kubectl apply -k .

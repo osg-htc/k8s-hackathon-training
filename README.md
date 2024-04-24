@@ -2,22 +2,21 @@ Joint US ATLAS / IRIS-HEP Kubernetes Hackathon
 ==============================================
 
 This repository contains instructions and contents for GitOps Kubernetes deployments using Flux.
-It assumes that you have set up a basic Kubernetes cluster.
+It assumes that you have set up a basic Kubernetes cluster by completing the first phase of the tutorial.
 
-NOTE: all the commands in this part of the tutorial should be run from your tutorial host (e.g., `cXXX.af`)
+NOTE: all the commands in this part of the tutorial should be run from the login host (e.g., `login05`)
 
 0.  Parts of this section will require pushing commits to a shared GitHub repository.
-    This is fully possible through the GitHub web editor but can quickly become tedious with the more files that you
-    have to edit, so we suggest cloning the repository to your local machine and preparing credentials to push to the
-    shared repository.
-    See the following documents for a suggested setup:
+    This is fully possible through the GitHub web editor but quickly becomes tedious with the more files that have to
+    edit, so you should create a new SSH key and associate it with your GitHub account:
+    See the following documents:
 
-    -   [Cloning GitHub repositories](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
+    -   [Generate an SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
     -   [Adding an SSH key to GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
 
-1.  Clone this repository to your *tutorial* host
+1.  Clone this repository to the login host:
 
-        git clone https://github.com/osg-htc/k8s-hackathon-training
+        git clone ssh://git@github.com/osg-htc/k8s-hackathon-training
 
 2.  [Install Flux components](manifests/flux-install)
 

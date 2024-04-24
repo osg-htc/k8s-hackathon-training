@@ -15,7 +15,7 @@ In this step, we will manually create the Flux Kustomization and GitRepository o
 3.  Commit your changes to the GitHub repository using the GitHub web UI or your Git workflow of choice.
     N.B. this is a shared repository so you'll want to make sure to rebase any local repository copies frequently!
 
-4.  From your tutorial host, pull in your updates:
+4.  From your login host, pull in your updates:
 
         git pull origin
 
