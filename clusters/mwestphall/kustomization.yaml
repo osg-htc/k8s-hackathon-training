@@ -1,2 +1,3 @@
 resources:
   - tenants/osg
+  - tenants/usatlas
