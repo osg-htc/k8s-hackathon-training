@@ -1,26 +1,14 @@
 Install or Update Flux
 ======================
 
-In a standard installation, [Flux](https://fluxcd.io/) can be installed into a Kubernetes cluster with its first-class
-boostrap support:
-
-```
-flux bootstrap --owner osg-htc \
-               --repository k8s-hackathon-training \
-               --token-auth=false \
-               --private-key-file=$HOME/.ssh/github.key
-```
-
-However, this method has a few downsides:
-
-1.  This method requires an administrative-level access token for the target Git repository (e.g., GitHub PAT)
-
-2.  The resultant setup creates a running Flux within your cluster that makes Flux responsible for updating itself.
+In this tutorial we will follow the manual installation procedure for [Flux](https://fluxcd.io/).
+(Normally Flux is installed onto a Kubernetes cluster with its `flux bootstrap` command.
+See the [standard flux installation](#standard-flux-installation) section for the procedure and drawbacks.)
 
 Manual Installation
 -------------------
 
-Instead, we can do the bootstrapping ourselves to install the Flux component definitions, namespace, etc:
+We can do the bootstrapping ourselves to install the Flux component definitions, namespace, etc:
 Set up of the Kustomization, GitRepository, and SSH secret objects will come in a later step.
 
 From this directory (`k8s-hackathon-training/manifests/flux-install`), run the following on your tutorial host:
@@ -49,3 +37,22 @@ To update Flux in the future, use the following procedure:
 4.  Update Flux manually:
 
         kubectl apply -k .
+
+Standard Flux Installation
+--------------------------
+
+In a standard installation, [Flux](https://fluxcd.io/) can be installed into a Kubernetes cluster with its first-class
+boostrap support:
+
+```
+flux bootstrap --owner osg-htc \
+               --repository k8s-hackathon-training \
+               --token-auth=false \
+               --private-key-file=$HOME/.ssh/github.key
+```
+
+However, this method has a few downsides:
+
+1.  This method requires an administrative-level access token for the target Git repository (e.g., GitHub PAT)
+
+2.  The resultant setup creates a running Flux within your cluster that makes Flux responsible for updating itself.
