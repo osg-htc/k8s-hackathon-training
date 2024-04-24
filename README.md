@@ -111,7 +111,7 @@ turn them into decrypted Kubernetes secrets.
     commit this change to the GitHub repository:
 
         resources:
-          - bootstrap
+          - bootstrap/
           - ../../manifests/sealed-secrets
 
 3.  Verify that the Sealed Secrets operator has started:
@@ -133,10 +133,11 @@ turn them into decrypted Kubernetes secrets.
 6.  Add the sealed secret to the GitHub repository and reference it in `clusters/uchicago/kustomization.yaml`:
 
         resources:
+          - bootstrap/
           - ../../manifests/sealed-secrets
           - gh-deploy-key.yaml
 
-7.  Once the SealedSecret object is created, remove the manually created secret and the sealed secret in case it's
+8.  Once the SealedSecret object is created, remove the manually created secret and the sealed secret in case it's
     throwing the following error `Resource "deploy-key" already exists and is not managed by SealedSecret`:
 
         kubectl -n flux-system delete secret/deploy-key
