@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: prometheus-community
+  namespace: default
+spec:
+  interval: 1m
+  chart:
+    spec:
+      chart: prometheus-community/kube-prometheus-stack
+      version: '58.2.2'
+      sourceRef:
+        kind: <HelmRepository|GitRepository|Bucket>
+        name: 
+        namespace: flux-system
+      interval: 1m
+
