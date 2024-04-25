@@ -137,7 +137,7 @@ turn them into decrypted Kubernetes secrets.
           - ../../manifests/sealed-secrets
           - gh-deploy-key.yaml
 
-7.  Wait until the SealedSecret object before proceeding to step 8:
+7.  Wait until the SealedSecret object is created and started before proceeding to step 8:
 
         $ kubectl -n flux-system get sealedsecret
         NAME         AGE
