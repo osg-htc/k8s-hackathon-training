@@ -1,0 +1,25 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prom-grafana-ingress
+  namespace: prometheus
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: "nginx"
+  tls:
+    - hosts:
+        - grafana.c095.af.uchicago.edu
+      secretName: prom-grafana-tls
+  rules:
+    - host: grafana.c095.af.uchicago.edu
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: prometheus-grafana
+                port:
+                  number: 80
