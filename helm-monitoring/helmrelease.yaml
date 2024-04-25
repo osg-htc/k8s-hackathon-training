@@ -10,8 +10,8 @@ spec:
       chart: prometheus-community/kube-prometheus-stack
       version: '58.2.2'
       sourceRef:
-        kind: <HelmRepository|GitRepository|Bucket>
-        name: 
+        kind: HelmRepository
+        name: prometheus-community
         namespace: flux-system
       interval: 1m
 
