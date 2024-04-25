@@ -235,7 +235,7 @@ theoretical operators will have write access to
 
 2.  Repeat the [above namespace creation directions](#create-an-admin-managed-namespace), replacing `osg` with `usatlas`
 
-3.  In the `cluters/uchicago/tenants/usatlas` directory, create a `service-account.yaml` file to create a Kubernetes
+3.  In the `clusters/uchicago/tenants/usatlas` directory, create a `service-account.yaml` file to create a Kubernetes
     ServiceAccount to allow Flux to manage the namespace and add a reference to it in the
     `clusters/uchicago/tenants/usatlas/kustomization.yaml`:
 
