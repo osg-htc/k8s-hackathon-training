@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: podinfo
 resources:
   #- namespace.yaml
-  - helmhttpsrepository.yaml
+  - helmhttpsrepo.yaml
   - helmrelease.yaml
     #configMapGenerator:
     #- name: podinfo-values
