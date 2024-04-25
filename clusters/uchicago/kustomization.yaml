@@ -3,6 +3,8 @@ resources:
   - bootstrap/
   - ../../manifests/sealed-secrets
   - gh-deploy-key.yaml
+  - helmrepos.yaml
+
+  # Tenants and their namespaces
   - tenants/osg
   - tenants/usatlas
-  - helmrepos.yaml
