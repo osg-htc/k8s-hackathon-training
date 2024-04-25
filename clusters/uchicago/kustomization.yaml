@@ -7,4 +7,5 @@ resources:
 
   # Tenants and their namespaces
   - tenants/osg
+  - tenants/monitoring
   - tenants/usatlas
